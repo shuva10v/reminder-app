@@ -3,7 +3,9 @@ plugins {
     id 'org.springframework.boot' version '2.7.4'
 }
 
-group 'org.example'
+apply plugin: 'io.spring.dependency-management'
+
+group 'io.shuvalov'
 version '1.0-SNAPSHOT'
 
 repositories {

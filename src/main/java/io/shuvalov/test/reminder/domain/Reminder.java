@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.OffsetDateTime;
 
 @Entity
 @Data
@@ -15,7 +16,9 @@ public class Reminder {
 
 	private String name;
 
-	
+	private String description;
 
-	// TODO
+	private OffsetDateTime time;
+
+	private Boolean notified = false;
 }
