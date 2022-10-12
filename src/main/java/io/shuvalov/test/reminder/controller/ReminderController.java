@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reminder")
+@RequestMapping("/reminders")
 public class ReminderController {
 	private final ReminderRepository repository;
 
