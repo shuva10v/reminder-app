@@ -1,14 +1,14 @@
 import {useAlert} from "react-alert";
 import {useEffect, useState} from "react";
 import {Container, Typography} from "@mui/material";
+import jwtHeaders from "./utils";
 
-function Reminders() {
+function Reminders(props) {
   const alert = useAlert();
   const [reminders, setReminders] = useState([]);
 
   useEffect(() => {
-    console.log("Reminders")
-    fetch("/reminders")
+    fetch("/reminders", jwtHeaders(props.jwtToken))
       .then(async(response) => {
         if (!response.ok) {
           const err = await response.text();

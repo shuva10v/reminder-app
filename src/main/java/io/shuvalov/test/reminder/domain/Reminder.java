@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -13,6 +15,10 @@ public class Reminder {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name="ownerId")
+	private User owner;
 
 	private String name;
 

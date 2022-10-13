@@ -4,6 +4,7 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import {useState} from "react";
 import {useEffect} from "react";
 import {
+  AppBar,
   Box,
   Button,
   CircularProgress,
@@ -11,7 +12,7 @@ import {
   FormControl,
   Input,
   InputLabel,
-  TextField,
+  TextField, Toolbar,
   Typography
 } from "@mui/material";
 import jwtHeaders from "./utils";
@@ -41,6 +42,11 @@ function Main() {
       .catch(error => alert.show("Request error: " + error));
   }, [user, jwtToken]);
 
+  function logout() {
+    setUser(undefined);
+    setJwtToken(undefined);
+  }
+
   function signupOrAuth(signup) {
     if (signup) {
       // TODO validation
@@ -62,10 +68,7 @@ function Main() {
       .catch(error => alert.show("Request error: " + error));
   }
 
-  console.log("User", user);
-  if (jwtToken === undefined) {
-    return <CircularProgress/>
-  } else if (jwtToken === -1) {
+  if (jwtToken === -1) {
     return (<Container>
      <Box>
        <Typography>Login:</Typography>
@@ -81,12 +84,22 @@ function Main() {
        </FormControl>
      </Box>
     </Container>)
+  } else if (jwtToken === undefined || user === undefined) {
+    return <CircularProgress/>
   } else {
     return (
       <div>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              Hello, {user?.email}
+            </Typography>
+            <Button color="inherit" onClick={logout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
         <HashRouter>
           <Routes>
-            <Route path="/reminders" element={<Reminders />} />
+            <Route path="/reminders" element={<Reminders jwtToken={jwtToken}/>} />
           </Routes>
         </HashRouter>
       </div>
