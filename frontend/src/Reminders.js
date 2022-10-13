@@ -18,7 +18,7 @@ function Reminders() {
         }
       })
       .then(res => setReminders(res))
-      .catch(error => alert.show("Ошибка при выполнении запроса: " + error));
+      .catch(error => alert.show("Request error: " + error));
   })
 
   console.log("reminders", reminders);
