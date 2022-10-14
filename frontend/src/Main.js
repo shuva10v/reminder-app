@@ -10,8 +10,6 @@ import {
   CircularProgress,
   Container,
   FormControl,
-  Input,
-  InputLabel,
   TextField, Toolbar,
   Typography
 } from "@mui/material";
@@ -20,7 +18,7 @@ import jwtHeaders from "./utils";
 function Main() {
   const alert = useAlert();
   const [user, setUser] = useState();
-  const [jwtToken, setJwtToken] = useState();
+  const [jwtToken, setJwtToken] = useState(sessionStorage.getItem("jwt_token"));
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -32,8 +30,8 @@ function Main() {
       .then(response => {
         if (response.status === 401) {
           setJwtToken(-1);
+          sessionStorage.removeItem("jwt_token");
         } else if (response.status === 200) {
-          // console.log("User ok", response.json())
           response.json().then(obj => setUser(obj));
         } else {
           return response.text().then(text => alert.show("Unknown error: " + text));
@@ -45,6 +43,7 @@ function Main() {
   function logout() {
     setUser(undefined);
     setJwtToken(undefined);
+    sessionStorage.removeItem("jwt_token");
   }
 
   function signupOrAuth(signup) {
@@ -57,7 +56,10 @@ function Main() {
       headers: {'Content-type': 'application/json'}
     }).then(response => {
       if (response.ok) {
-        response.json().then(obj => setJwtToken(obj.jwttoken));
+        response.json().then(obj => {
+          setJwtToken(obj.jwttoken);
+          sessionStorage.setItem("jwt_token", obj.jwttoken);
+        });
       } else if (response.status === 409) {
         console.log("Conflict detected");
         alert.show("Email already registered");
@@ -99,7 +101,7 @@ function Main() {
         </AppBar>
         <HashRouter>
           <Routes>
-            <Route path="/reminders" element={<Reminders jwtToken={jwtToken}/>} />
+            <Route path="/" element={<Reminders jwtToken={jwtToken}/>} />
           </Routes>
         </HashRouter>
       </div>

@@ -1,6 +1,8 @@
 package io.shuvalov.test.reminder.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +23,7 @@ public class User {
 
 	private String email;
 
+	// to avoid password leak to frontend
+	@Getter(onMethod_ = @JsonIgnore)
 	private String password;
-
-
 }

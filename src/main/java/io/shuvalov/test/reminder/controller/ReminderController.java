@@ -6,8 +6,9 @@ import io.shuvalov.test.reminder.repository.ReminderRepository;
 import io.shuvalov.test.reminder.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +31,7 @@ public class ReminderController {
 	private UserRepository userRepository;
 
 	@GetMapping
-	public ResponseEntity<List<Reminder>> list(AuthenticatedPrincipal principal) {
+	public ResponseEntity<List<Reminder>> list(Principal principal) {
 		Optional<User> user = userRepository.findByEmail(principal.getName());
 		if (user.isEmpty()) {
 			return ResponseEntity.notFound().build();
@@ -37,14 +40,21 @@ public class ReminderController {
 		return ResponseEntity.ok(reminderRepository.findAllByOwner(user.get()));
 	}
 
+	@DeleteMapping("/{reminderId}")
+	public ResponseEntity delete(@PathVariable("reminderId") Long reminderId) {
+		reminderRepository.deleteById(reminderId);
+		return ResponseEntity.ok("OK");
+	}
+
 	@PostMapping
-	public ResponseEntity create(@RequestBody Reminder reminder, AuthenticatedPrincipal principal) throws URISyntaxException {
+	public ResponseEntity create(@RequestBody Reminder reminder, Principal principal) throws URISyntaxException {
 		Optional<User> user = userRepository.findByEmail(principal.getName());
 		if (user.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		Reminder saved = reminderRepository.save(reminder);
 		reminder.setOwner(user.get());
+		reminder.setCreated(LocalDateTime.now());
+		Reminder saved = reminderRepository.save(reminder);
 		return ResponseEntity.created(new URI("/reminder/" + saved.getId())).body(saved);
 	}
 }
