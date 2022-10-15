@@ -12,7 +12,7 @@ import {
   Typography
 } from "@mui/material";
 import jwtHeaders from "./utils";
-import {AddCircle} from "@mui/icons-material";
+import {AddCircle, RefreshOutlined} from "@mui/icons-material";
 import AddReminder from "./AddReminder";
 import dayjs from "dayjs";
 
@@ -65,11 +65,14 @@ function Reminders(props) {
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
               Reminders
             </Typography>
-            <Box>
+            <Box sx={{display: 'flex'}}>
               <AddReminder
                 jwtToken={props.jwtToken}
                 update={updateReminders}
               />
+              <IconButton onClick={updateReminders}>
+                <RefreshOutlined/>
+              </IconButton>
             </Box>
           </Box>
 
@@ -88,7 +91,7 @@ function Reminders(props) {
                 <TableRow key={idx}>
                   <TableCell>{reminder.name}</TableCell>
                   <TableCell>{reminder.description}</TableCell>
-                  <TableCell>{reminder.time} {dayjs().isAfter(dayjs(reminder.time)) > 0 ? "(expired)" : null}</TableCell>
+                  <TableCell>{reminder.time} {reminder.notified ? "(notified)" : null}</TableCell>
                   <TableCell><Button onClick={() => remove(reminder.id)}>Remove</Button></TableCell>
                 </TableRow>
               ))}

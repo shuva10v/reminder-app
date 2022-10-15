@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +53,7 @@ public class ReminderController {
 			return ResponseEntity.notFound().build();
 		}
 		reminder.setOwner(user.get());
-		reminder.setCreated(LocalDateTime.now());
+		reminder.setCreated(ZonedDateTime.now());
 		Reminder saved = reminderRepository.save(reminder);
 		return ResponseEntity.created(new URI("/reminder/" + saved.getId())).body(saved);
 	}
