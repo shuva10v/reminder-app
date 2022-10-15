@@ -14,6 +14,7 @@ import {
 import jwtHeaders from "./utils";
 import {AddCircle} from "@mui/icons-material";
 import AddReminder from "./AddReminder";
+import dayjs from "dayjs";
 
 function Reminders(props) {
   const alert = useAlert();
@@ -87,7 +88,7 @@ function Reminders(props) {
                 <TableRow key={idx}>
                   <TableCell>{reminder.name}</TableCell>
                   <TableCell>{reminder.description}</TableCell>
-                  <TableCell>{reminder.date}</TableCell>
+                  <TableCell>{reminder.time} {dayjs().isAfter(dayjs(reminder.time)) > 0 ? "(expired)" : null}</TableCell>
                   <TableCell><Button onClick={() => remove(reminder.id)}>Remove</Button></TableCell>
                 </TableRow>
               ))}
