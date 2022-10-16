@@ -33,7 +33,7 @@ reminder.notifications.email.smtp.password=test@mail.ru # your email password he
 3. Run [Main](./src/main/java/io/shuvalov/test/reminder/Main.java) either from IDE or gradle (``./gradlew bootRun``),
 passing all the environment variables from the previous step.
 4. Run frontend: invoke ``npm start`` in [frontend](./frontend) dir.
-5. Go to http://localhost:3000
+5. Go to [http://localhost:3000](http://localhost:3000)
 
 ## Tests
 
@@ -43,7 +43,7 @@ passing all the environment variables from the previous step.
 
 ## Build and deployment with docker
 
-1. Build frontend: ``npm run build``  in [frontend](./frontend) dir.
+1. Build frontend: ``npm install && npm run build``  in [frontend](./frontend) dir.
 2. Build docker image: ``./gradlew  build docker -x test``
 3. Prepare configuration file ``.env``:
 ```
@@ -59,6 +59,7 @@ SMTP_PASSWORD=
 * **JWT_SECRET** - secret for JWT auth
 * **SMTP_HOST**, **SMTP_PORT**, **SMTP_LOGIN**, **SMTP_PASSWORD** - SMTP credentials for sending notifications (TLS v1.2 compatible)
 4. Run application: ``docker compose up -d``
+5. Go to [http://localhost:8080](http://localhost:8080)
 
 ## Demo
 
