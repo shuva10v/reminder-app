@@ -4,7 +4,6 @@ import {
   Box, Button,
   CircularProgress,
   Container,
-  Dialog,
   IconButton,
   Paper,
   Table, TableBody, TableCell,
@@ -14,7 +13,6 @@ import {
 import jwtHeaders from "./utils";
 import {AddCircle, RefreshOutlined} from "@mui/icons-material";
 import AddReminder from "./AddReminder";
-import dayjs from "dayjs";
 
 function Reminders(props) {
   const alert = useAlert();

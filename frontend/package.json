@@ -15,7 +15,6 @@
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/x-date-pickers": "^5.0.4",
-    "react-router-dom": "^6.3.0",
     "dayjs": "^1.11.5"
   },
   "scripts": {

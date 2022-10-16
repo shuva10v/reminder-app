@@ -1,6 +1,5 @@
 import {useAlert} from 'react-alert'
 import Reminders from "./Reminders";
-import {HashRouter, Route, Routes} from "react-router-dom";
 import {useState} from "react";
 import {useEffect} from "react";
 import {
@@ -99,11 +98,7 @@ function Main() {
             <Button color="inherit" onClick={logout}>Logout</Button>
           </Toolbar>
         </AppBar>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Reminders jwtToken={jwtToken}/>} />
-          </Routes>
-        </HashRouter>
+        <Reminders jwtToken={jwtToken}/>
       </div>
     );
   }
