@@ -16,3 +16,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  reminder:
+    image: reminder-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/reminder"
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${SECURE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      REMINDER_NOTIFICATIONS_EMAIL_SMTP_HOST: ${SMTP_HOST}
+      REMINDER_NOTIFICATIONS_EMAIL_SMTP_PORT: ${SMTP_PORT}
+      REMINDER_NOTIFICATIONS_EMAIL_SMTP_LOGIN: ${SMTP_LOGIN}
+      REMINDER_NOTIFICATIONS_EMAIL_SMTP_FROM: ${SMTP_LOGIN}
+      REMINDER_NOTIFICATIONS_EMAIL_SMTP_PASSWORD: ${SMTP_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy

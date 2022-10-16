@@ -46,8 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
-				.authorizeRequests().antMatchers("/user/signup", "/user/authenticate").permitAll().
-						anyRequest().authenticated().and().
+				.authorizeRequests().antMatchers("/user/signup", "/user/authenticate",
+					// frontend static files
+					"/", "/index.html", "/manifest.json", "favicon.ico", "/static/*/*"
+				).permitAll()
+						.anyRequest().authenticated().and().
 						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
 				.and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
