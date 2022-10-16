@@ -59,3 +59,7 @@ SMTP_PASSWORD=
 * **JWT_SECRET** - secret for JWT auth
 * **SMTP_HOST**, **SMTP_PORT**, **SMTP_LOGIN**, **SMTP_PASSWORD** - SMTP credentials for sending notifications (TLS v1.2 compatible)
 4. Run application: ``docker compose up -d``
+
+## Demo
+
+![demo](./reminder_demo.gif)
