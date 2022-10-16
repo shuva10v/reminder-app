@@ -43,8 +43,12 @@ function AddReminder(props) {
       }})
       .then(async(response) => {
         if (!response.ok) {
-          const err = await response.text();
-          throw new Error("Wrong response: " + response.status + '\n' + err);
+          if (response.status === 401) {
+            throw new Error("Your session is expired, please logout and login");
+          } else {
+            const err = await response.text();
+            throw new Error("Wrong response: " + response.status + '\n' + err);
+          }
         } else {
           setName(undefined);
           setDescription(undefined);
